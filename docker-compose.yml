@@ -1,0 +1,19 @@
+version: '3.8'
+services:
+  springapp:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 8080:8080
+    volumes:
+      - ./test.txt:/app/target/test.txt
+    networks:
+      - my-network
+
+networks:
+  my-network:
+    external: true
+
+    
+

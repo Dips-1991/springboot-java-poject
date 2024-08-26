@@ -22,6 +22,21 @@ WORKDIR /app
 # Copy the JAR file from the build stage
 COPY --from=build /app/target/spring-boot-web.jar app.jar
 
+
+#-----------------------Code to push .jar Artifact in Nexus repository------------------------
+
+# Set environment variables for Nexus credentials and repository
+      ENV NEXUS_URL=http://52.90.56.214:8081/repository/maven-releases/
+      ENV NEXUS_USERNAME=admin
+      ENV NEXUS_PASSWORD=dipak
+# Install curl for uploading artifacts
+      RUN apt-get update && apt-get install -y curl
+# Upload the artifact to Nexus Repository
+      RUN curl -u ${NEXUS_USERNAME}:${NEXUS_PASSWORD} --upload-file app.jar ${NEXUS_URL}
+
+#-----------------------Code to push .jar Artifact in Nexus repository------------------------
+
+
 # Expose the application port
 EXPOSE 8080
 
